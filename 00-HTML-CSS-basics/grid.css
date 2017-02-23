@@ -17,9 +17,6 @@ html {
 
 /* Mobile First Grid
 ========================================================================== */
-
-.column { margin-bottom: 1.5rem; }
-
 @media (min-width: 40rem) {
 	.column {
 		float: left;
@@ -33,6 +30,7 @@ html {
 	.column.half { width: 50%; }
 	.column.third { width: 33.3%; }
 	.column.fourth { width: 25%; }
+	.column.fifth { width: 20%; }
 	.column.flow-opposite { float: right; }
 }
 
