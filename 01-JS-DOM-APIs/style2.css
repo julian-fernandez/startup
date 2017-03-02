@@ -62,3 +62,24 @@ div#slideSource.fade {
 	vertical-align: top;
 	position: relative;
 }
+
+.repolist{
+	text-align:right;
+	display:block;
+}
+.repolist li{
+	list-style-type: none;
+}
+
+.searchform{
+	margin-top:50px;
+}
+
+.arraytable{
+	border-spacing:0;
+	border-collapse:collapse;
+}
+.arraytable td, .arraytable th{
+	border: 1px solid black;
+	padding:5px;
+}
