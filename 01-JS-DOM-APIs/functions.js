@@ -55,6 +55,7 @@ function httpGet(config) {
 
 function httpPromise(){
 	var config = {url: 'http://api.icndb.com/jokes/random', id: 'joke'};
+
 	httpGet(config)
 	.then(
 		function (value) {
@@ -64,6 +65,7 @@ function httpPromise(){
 			console.error('Unfulfilled, somehow', reason);
 		});
 }
+
 /* git */
 
 function getGit(){
@@ -156,3 +158,49 @@ function createTable(tableData) {
 }
 
 createTable(testArray);
+
+/* PROMISE TEST 2 */
+
+var ajax = function (options) {
+	return new Promise(function (resolve, reject) {
+		var request = new XMLHttpRequest();  
+    var async = true; // siempre debe ser asíncrono el llamado
+    request.onload = resolve;
+    request.onerror = reject;
+    
+    if(options.method === 'GET' && options.data) {
+    	options.url += '?' + options.data;
+    }
+    
+    request.open(options.method, options.url, async);
+    
+    if(options.contentType) {
+    	request.setRequestHeader('Content-type', options.contentType);
+    }
+    
+    if(options.method !== 'GET' && options.data) {
+    	request.send(options.data);
+    } else {
+    	request.send();
+    }
+});
+}
+
+var ajaxobj = {
+	url: 'https://api.github.com/search/repositories',
+	method: 'GET',
+  //contentType: null,
+  data: 'q=javascript'
+};
+
+ajax(ajaxobj).then(function (response) {
+	if(response.target.response !== '') {
+		var data = JSON.parse(response.target.response);
+		var obj = data.items[0];
+		console.log(obj.full_name);
+		var reponame = obj.full_name;
+		document.querySelector('#target').innerHTML = reponame;
+	}
+}, function () {
+	console.log('Hubo un error!');
+});
