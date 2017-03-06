@@ -1,33 +1,37 @@
 class EventEmitter {
- constructor() {
-   this.events = {};
- }
-
- on( eventName, fn ) {
-  if( !this.events[eventName] ) {
-   this.events[eventName] = [];
- }
-
- this.events[eventName].push(fn);
-}
-emit(eventName, data) {
-  const event = this.events[eventName];
-  if( event ) {
-    event.forEach(fn => {
-     fn.call(null, data);
-   });
+  constructor() {
+    this.listeners = {};
   }
-}
-}
-
-
+  on(event, listener) {
+    if (this.listeners[event] === undefined) {
+      this.listeners[event] = [];
+    }
+    this.listeners[event].push(listener);
+  }
+  emit(event) {
+    this.listeners[event].forEach(function(fn){
+      console.log("Now listening");
+    })
+  }
+  off(event, listener) {
+    if (this.listeners[event] === undefined){
+      console.log("Listeners already cleared");
+    }
+    else {
+      this.listeners[event].length = 0;
+      let deletedListener = this.listeners[event];
+      console.log("Cleared" + deletedListener);
+    }
+  }
+};
+/*
 let emitter = new EventEmitter();
 emitter.on('test', data => {
  console.log(data);
 });
 
 emitter.emit('test','ok');
-
+*/
 class Movie extends EventEmitter{
   constructor(title, year, duration, cast) {
     super();
@@ -42,12 +46,16 @@ class Movie extends EventEmitter{
 
  play(){
   console.log(this.title + " is now playing");
+  super.emit('play');
+  this.info = "playing";
 };
 pause(){
+ super.emit('pause');
  console.log(this.title + " is now paused");
 };
 resume(){
- console.log(this.title + " has resumed playing");
+  super.emit('resume');
+  console.log(this.title + " has resumed playing");
 };
 addCast(actor){
   this.cast.push(actor);
@@ -63,7 +71,8 @@ document.getElementById("demo").innerHTML =
 starWars.greeting(); 
 
 
-class Logger{
+class Logger {
+  constructor(){}
   log(info){
     console.log(info);
   }
