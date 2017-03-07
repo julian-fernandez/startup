@@ -5,8 +5,10 @@ class EventEmitter {
   on(event, listener) {
     if (this.listeners[event] === undefined) {
       this.listeners[event] = [];
+      console.log("no event");
     }
     this.listeners[event].push(listener);
+    console.log("Trying to push");
   }
   emit(event) {
     this.listeners[event].forEach(function(fn){
@@ -24,14 +26,7 @@ class EventEmitter {
     }
   }
 };
-/*
-let emitter = new EventEmitter();
-emitter.on('test', data => {
- console.log(data);
-});
 
-emitter.emit('test','ok');
-*/
 class Movie extends EventEmitter{
   constructor(title, year, duration, cast) {
     super();
@@ -74,7 +69,7 @@ starWars.greeting();
 class Logger {
   constructor(){}
   log(info){
-    console.log(info);
+    console.log("Logger output: " + info);
   }
 };
 var logger = new Logger();
